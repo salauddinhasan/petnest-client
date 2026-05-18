@@ -74,21 +74,18 @@ const AllPetsCard = ({ petnes }) => {
         <div className="border-t border-neutral-100 my-3 w-full"></div>
 
         <div className="grid grid-cols-2 gap-3 w-full pt-1">
-          <Button
-            as={Link}
+          <Link
             href={`/all-pets/${_id}`}
-            className="w-full bg-neutral-200 hover:bg-neutral-200 text-neutral-700 font-bold text-xs tracking-wide h-9 rounded-xl transition-all border border-neutral-200/60"
+            className="w-full bg-neutral-100 hover:bg-neutral-200 inline-flex items-center justify-center text-neutral-700 font-bold text-xs tracking-wide h-9 rounded-xl transition-all border border-neutral-200/60"
           >
             View Details
-          </Button>
-
-          <Button
-            as={Link}
+          </Link>
+          <Link
             href={`/all-pets/${_id}`}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs tracking-wide h-9 rounded-xl shadow-sm transition-all"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white inline-flex items-center justify-center   font-bold text-xs tracking-wide h-9 rounded-xl transition-all border border-neutral-200/60"
           >
             Adopt Now
-          </Button>
+          </Link>
         </div>
       </div>
     </div>

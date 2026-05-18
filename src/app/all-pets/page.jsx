@@ -1,13 +1,8 @@
 import AllPetsCard from "@/components/AllPetsCard";
+import { fetchPets } from "@/lib/petnest/data";
 import React from "react";
 
-const fetchPets = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/petnest`, {
-    cache: "no-store",
-  });
-  const data = res.json();
-  return data || [];
-};
+
 
 const AllPets = async () => {
   const petnest = await fetchPets();

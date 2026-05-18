@@ -42,7 +42,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm px-5 py-3 md:px-10 flex items-center justify-between">
+    <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-sky-50 shadow-sm px-5 py-3 md:px-10 flex items-center justify-between">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 cursor-pointer">
         <span className="text-2xl"></span>

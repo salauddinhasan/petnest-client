@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@heroui/react";
 import { FaStar, FaHeart, FaPaw } from "react-icons/fa";
 import Image from "next/image";
+import PetReviews from "./PetReviews";
 
 const PetDetailsView = ({ pet, id }) => {
   const images =
@@ -141,6 +142,8 @@ const PetDetailsView = ({ pet, id }) => {
           </Button>
         </div>
       </div>
+
+      
     </div>
   );
 };

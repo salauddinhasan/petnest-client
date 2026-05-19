@@ -11,12 +11,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const user = {
-    name: "Salauddin",
-    email: "salauddin@gmail.com",
-    photoURL:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
-  };
+  const user = null;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -45,7 +40,6 @@ const Navbar = () => {
     <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-sky-50 shadow-sm px-5 py-3 md:px-10 flex items-center justify-between">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 cursor-pointer">
-        <span className="text-2xl"></span>
         <h1 className="text-xl font-bold text-gray-800 tracking-wider">
           PetNest
         </h1>
@@ -139,12 +133,20 @@ const Navbar = () => {
             )}
           </div>
         ) : (
-          <Link
-            href="/login"
-            className="bg-sky-600 text-white hover:bg-sky-700 px-5 py-1.5 rounded-lg text-sm font-semibold shadow-sm transition-all"
-          >
-            Login
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/login"
+              className="text-gray-600 hover:text-sky-600 text-sm font-semibold px-4 py-1.5 transition-all"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="bg-sky-600 text-white hover:bg-sky-700 px-4 py-1.5 rounded-lg text-sm font-semibold shadow-sm transition-all"
+            >
+              Register
+            </Link>
+          </div>
         )}
       </div>
 
@@ -169,7 +171,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="absolute top-14 left-0 w-full bg-white border-b border-gray-200 p-5 flex flex-col gap-4 shadow-lg md:hidden">
+        <div className="absolute top-14 left-0 w-full bg-white border-b border-gray-200 p-5 flex flex-col gap-4 shadow-lg md:hidden z-50">
           <Link
             href="/"
             onClick={() => setIsMenuOpen(false)}
@@ -224,13 +226,22 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <Link
-              href="/login"
-              onClick={() => setIsMenuOpen(false)}
-              className="w-full text-center bg-sky-600 text-white py-2 rounded-md font-semibold text-sm"
-            >
-              Login
-            </Link>
+            <div className="flex flex-col gap-2.5 pt-2 border-t border-gray-100">
+              <Link
+                href="/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="w-full text-center border border-gray-200 text-gray-700 py-2 rounded-md font-semibold text-sm hover:bg-gray-50 transition-all"
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setIsMenuOpen(false)}
+                className="w-full text-center bg-sky-600 text-white py-2 rounded-md font-semibold text-sm hover:bg-sky-700 transition-all"
+              >
+                Register
+              </Link>
+            </div>
           )}
         </div>
       )}

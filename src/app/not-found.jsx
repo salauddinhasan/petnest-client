@@ -2,12 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
-import { Button } from "@heroui/react";
+ 
 import { FaHome, FaQuestionCircle, FaSearch } from "react-icons/fa";
 
 const NotFoundPage = () => {
   return (
-    <div className="min-h-[90vh] py-16 space-y-5 bg-white flex flex-col items-center justify-center px-6 relative overflow-hidden select-none">
+    <div className="min-h-[50vh] py-16 space-y-5 bg-white flex flex-col items-center justify-center px-6 relative overflow-hidden select-none">
       <h1 className="text-4xl sm:text-5xl font-black text-neutral-500 tracking-tighter leading-none mb-4 font-sans py-2">
         404
       </h1>
@@ -30,23 +30,23 @@ const NotFoundPage = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-4 w-full max-w-sm mt-4">
-          <Button
-            as={Link}
+          <Link
+             
             href="/"
             className="w-full bg-white hover:bg-neutral-50 text-neutral-600 border border-neutral-300 hover:border-neutral-400 font-bold text-xs tracking-widest uppercase h-10 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 py-3 px-10"
           >
             <FaQuestionCircle size={12} className="text-neutral-400" />
             Home
-          </Button>
+          </Link>
 
-          <Button
-            as={Link}
+          <Link
+            
             href="/contact"
             className="w-full bg-white hover:bg-neutral-50 text-neutral-600 border border-neutral-300 hover:border-neutral-400 font-bold text-xs tracking-widest uppercase h-10 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 py-3 px-10"
           >
             <FaQuestionCircle size={12} className="text-neutral-400" />
             Contacts
-          </Button>
+          </Link>
         </div>
       </div>
     </div>

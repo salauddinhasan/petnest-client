@@ -8,7 +8,7 @@ import { FaArrowRight, FaPaw } from "react-icons/fa";
 
 const Hero = () => {
   return (
-    <section className="bg-white text-neutral-900 py-16 md:py-24 px-6 md:px-8  grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <section className="bg-white text-neutral-900 py-16 md:py-24 px-6 md:px-12  grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <div className="flex flex-col  mx-auto gap-6 text-center md:text-left items-center md:items-start ">
         <div className="inline-flex items-center gap-2 bg-neutral-50 border border-neutral-200/60 px-3 py-1.5 rounded-full w-fit">
           <FaPaw size={12} className="text-neutral-800" />

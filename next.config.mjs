@@ -18,6 +18,18 @@ const nextConfig = {
         protocol: "https",
         hostname: "encrypted-tbn0.gstatic.com",
       },
+      {
+        protocol: "https",
+        hostname: "imgbb.com",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+      },
+      {
+        protocol: "https",
+        hostname: "i.postimg.cc",
+      },
     ],
   },
   reactCompiler: true,

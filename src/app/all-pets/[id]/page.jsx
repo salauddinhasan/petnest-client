@@ -3,13 +3,29 @@ import Link from "next/link";
 import { Button } from "@heroui/react";
 import PetDetailsView from "@/components/PetDetailsView";
 import PetReviews from "@/components/PetReviews";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const DetailsPets = async ({ params }) => {
   const { id } = await params;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/petnest/${id}`, {
-    cache: "no-store",
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
   });
+
+  const res = await fetch(
+    `${process.env.BETTER_AUTH_URL}/petnest/${id}`,
+    {
+      cache: "no-store",
+    },
+    {
+      headers: {
+        // "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+        
+      },
+    },
+  );
 
   if (!res.ok) {
     return (

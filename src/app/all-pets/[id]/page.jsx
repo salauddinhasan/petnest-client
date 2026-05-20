@@ -14,18 +14,14 @@ const DetailsPets = async ({ params }) => {
   });
 
   const res = await fetch(
-    `${process.env.BETTER_AUTH_URL}/petnest/${id}`,
-    {
-      cache: "no-store",
+  `${process.env.NEXT_PUBLIC_API_URL}/petnest/${id}`,
+  {
+    cache: "no-store",
+    headers: {
+      authorization: `Bearer ${token}`,
     },
-    {
-      headers: {
-        // "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
-        
-      },
-    },
-  );
+  }
+);
 
   if (!res.ok) {
     return (

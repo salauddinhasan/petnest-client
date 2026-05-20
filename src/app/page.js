@@ -1,5 +1,6 @@
 import Featured from "@/components/Featured";
 import Hero from "@/components/Hero";
+import HowItWorks from "@/components/HowItWorks";
 import PetCareTips from "@/components/PetCareTips";
 import Stats from "@/components/Stats";
 import SuccessStories from "@/components/SuccessStories";
@@ -14,6 +15,7 @@ export default function Home() {
       <WhyAdopt />
       <SuccessStories/>
       <PetCareTips/>
+      <HowItWorks/>
     </div>
   );
 }

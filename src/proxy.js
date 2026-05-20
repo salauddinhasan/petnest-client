@@ -1,27 +1,24 @@
- 
+import { NextRequest, NextResponse } from "next/server";
 
-
-
-
-import { NextResponse } from "next/server";
-
-export async function middleware(request) {
+export function proxy(request) {
   const token1 = request.cookies.get("better-auth.session_token")?.value;
   const token2 = request.cookies.get(
     "__secure-better-auth.session_token",
   )?.value;
   const sessionToken = token1 || token2;
 
+  // console.log("All cookies:", request.cookies.getAll());
+  // console.log("Session token:", sessionToken);
+
   const { pathname } = request.nextUrl;
 
   const isDashboard = pathname.startsWith("/dashboard");
-  const isDetailsPage = pathname.startsWith("/all-pets/");
+  const isDetailsPage = pathname.startsWith("/all-pets");
   const isAuthPage =
     pathname.startsWith("/login") || pathname.startsWith("/register");
 
   if ((isDashboard || isDetailsPage) && !sessionToken) {
     const loginUrl = new URL("/login", request.url);
-
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
@@ -34,7 +31,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/all-pets/:path*", "/login", "/register"],
+  matcher: ["/dashboard/:path*", "/all-pet/:path*", "/login", "/register"],
 };
-
-

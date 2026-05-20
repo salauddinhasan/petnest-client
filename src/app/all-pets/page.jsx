@@ -2,8 +2,6 @@ import AllPetsCard from "@/components/AllPetsCard";
 import { fetchPets } from "@/lib/petnest/data";
 import React from "react";
 
-
-
 const AllPets = async () => {
   const petnest = await fetchPets();
   return (

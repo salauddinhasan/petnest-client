@@ -30,6 +30,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "i.postimg.cc",
       },
+      {
+        protocol: "https",
+        hostname: "img.freepik.com",
+      },
     ],
   },
   reactCompiler: true,

@@ -13,15 +13,12 @@ const DetailsPets = async ({ params }) => {
     headers: await headers(),
   });
 
-  const res = await fetch(
-  `${process.env.NEXT_PUBLIC_API_URL}/petnest/${id}`,
-  {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/petnest/${id}`, {
     cache: "no-store",
     headers: {
       authorization: `Bearer ${token}`,
     },
-  }
-);
+  });
 
   if (!res.ok) {
     return (
@@ -39,10 +36,12 @@ const DetailsPets = async ({ params }) => {
   const pet = await res.json();
 
   return (
-    <section className="bg-gray-200  py-8">
+    <section className="bg-gray-200 py-8">
       <div className="max-w-7xl mx-auto p-3 ">
         <p className="text-3xl font-bold items-center py-5">Details</p>
-        <PetDetailsView pet={pet} id={id} />
+
+        <PetDetailsView pet={pet} id={id} token={token} />
+
         <PetReviews />
       </div>
     </section>

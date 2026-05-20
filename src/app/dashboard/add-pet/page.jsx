@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 
-const AddPetsPage = () => {
+const AddPetsPage= () => {
   const router = useRouter();
   const { data: session } = useSession();
 

@@ -5,15 +5,25 @@ import Link from "next/link";
 import { Button } from "@heroui/react";
 import { FaStar, FaHeart, FaPaw } from "react-icons/fa";
 import Image from "next/image";
-import PetReviews from "./PetReviews";
+import { useRouter } from "next/navigation";
 
-const PetDetailsView = ({ pet, id }) => {
+const PetDetailsView = ({ pet, id, token }) => {
+  const router = useRouter();
+
   const images =
     pet?.images || [pet?.image, pet?.image, pet?.image].filter(Boolean);
   const [activeImage, setActiveImage] = useState(
     images[0] ||
       "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=800",
   );
+
+  const handleLinkClick = (e) => {
+    if (!token) {
+      e.preventDefault();
+      alert("🛑 রিকোয়েস্ট পাঠাতে প্রথমে লগইন করুন বস!");
+      router.push("/login");
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start py-16">
@@ -127,7 +137,11 @@ const PetDetailsView = ({ pet, id }) => {
         </div>
 
         <div className="flex items-center gap-3 mt-4 w-full">
-          <Link href={`/adopt-request/${id}`} className="w-full">
+          <Link
+            href={`/adopt-request/${id}`}
+            onClick={handleLinkClick}
+            className="w-full"
+          >
             <Button className="w-full bg-[#051242] hover:bg-[#0b1c5e] text-white font-black text-xs tracking-widest uppercase h-12 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
               <FaPaw size={14} />
               Bring {pet?.name || "Me"} Home
@@ -142,8 +156,6 @@ const PetDetailsView = ({ pet, id }) => {
           </Button>
         </div>
       </div>
-
-      
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export function proxy(request) {
   const token1 = request.cookies.get("better-auth.session_token")?.value;
@@ -6,9 +6,6 @@ export function proxy(request) {
     "__secure-better-auth.session_token",
   )?.value;
   const sessionToken = token1 || token2;
-
-  // console.log("All cookies:", request.cookies.getAll());
-  // console.log("Session token:", sessionToken);
 
   const { pathname } = request.nextUrl;
 
@@ -31,5 +28,5 @@ export function proxy(request) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/all-pet/:path*", "/login", "/register"],
+  matcher: ["/dashboard/:path*", "/all-pets/:path*", "/login", "/register"],
 };

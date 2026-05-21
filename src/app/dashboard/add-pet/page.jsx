@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 
-const AddPetsPage= () => {
+const AddPetsPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -191,7 +191,7 @@ const AddPetsPage= () => {
               </div>
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-bold text-neutral-700 uppercase tracking-wider">
-                  Adoption Fee (৳) *
+                  Adoption Fee ($) *
                 </label>
                 <input
                   type="number"

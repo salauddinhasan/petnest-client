@@ -3,17 +3,22 @@
 import React, { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import PetRequestsModal from "@/components/PetRequestsModal";
+import EditPetModal from "@/components/EditPetModal";
+ 
 
 const MyListingsPage = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [activePetId, setActivePetId] = useState(null);
+  const [selectedPetForEdit, setSelectedPetForEdit] = useState(null);
+
   const fetchMyListings = async () => {
     try {
       const session = await authClient.getSession();
       const token = session?.data?.token || "valid_token";
-
       const baseUrl =
         process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -29,18 +34,68 @@ const MyListingsPage = () => {
         setListings(result.data);
       }
     } catch (error) {
-      console.error("Failed to fetch listings:", error);
+      // console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  
-
   useEffect(() => {
     fetchMyListings();
-    
   }, []);
+
+  const openRequestsModal = (petId) => {
+    setActivePetId(petId);
+    document.getElementById("requests_modal").showModal();
+  };
+
+  const openEditModal = (pet) => {
+    setSelectedPetForEdit(pet);
+    document.getElementById("edit_pet_modal").showModal();
+  };
+
+  const handleStatusUpdate = async (
+    requestId,
+    newStatus,
+    petId,
+    setPetRequests,
+  ) => {
+    try {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${baseUrl}/requests/${requestId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus, petId: petId }),
+      });
+
+      const data = await res.json();
+      if (data.success || res.ok) {
+        toast.success(`Request ${newStatus} successfully! `);
+
+        setPetRequests((prev) =>
+          prev.map((req) =>
+            req._id === requestId ? { ...req, status: newStatus } : req,
+          ),
+        );
+
+        if (newStatus === "approved") {
+          setListings((prevListings) =>
+            prevListings.map((pet) =>
+              pet._id === petId ? { ...pet, status: "Adopted" } : pet,
+            ),
+          );
+        }
+      } else {
+        toast.error("Failed to update status.");
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      toast.error("Something went wrong!");
+    }
+  };
 
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this pet listing?")) {
@@ -59,15 +114,19 @@ const MyListingsPage = () => {
 
         const result = await res.json();
         if (result.success) {
-          toast("Pet deleted successfully! ");
-
+          toast.success("Pet deleted successfully! ");
           setListings(listings.filter((pet) => pet._id !== id));
         }
       } catch (error) {
-        console.error("Error deleting pet:");
         toast.error("Failed to delete pet.");
       }
     }
+  };
+
+  const handleUpdateSuccess = (updatedPet) => {
+    setListings((prev) =>
+      prev.map((pet) => (pet._id === updatedPet._id ? updatedPet : pet)),
+    );
   };
 
   if (loading) {
@@ -89,7 +148,7 @@ const MyListingsPage = () => {
 
       {listings.length === 0 ? (
         <div className="bg-white border border-neutral-200/60 p-8 rounded-2xl text-center text-neutral-400 font-medium text-sm shadow-sm">
-          You haven t listed any pets for adoption yet. 🐾
+          You haven t listed any pets for adoption yet.
         </div>
       ) : (
         <div className="overflow-x-auto bg-white rounded-2xl shadow-sm border border-neutral-200/60">
@@ -101,7 +160,7 @@ const MyListingsPage = () => {
                 <th className="p-4 font-black">Breed / Category</th>
                 <th className="p-4 font-black">Age</th>
                 <th className="p-4 font-black">Status</th>
-                <th className="p-4 font-black">Action</th>
+                <th className="p-4 font-black text-center">Action</th>
               </tr>
             </thead>
 
@@ -120,28 +179,41 @@ const MyListingsPage = () => {
                       }
                       width={100}
                       height={100}
-                      alt={pet.name}
+                      alt={pet.name || "Pet"}
                       className="w-12 h-12 object-cover rounded-xl border border-neutral-200"
                     />
                   </td>
-
                   <td className="p-4 font-bold text-neutral-950">
                     {pet.name || pet.petName}
                   </td>
-
                   <td className="p-4 font-medium">
                     {pet.breed || pet.category || "N/A"}
                   </td>
-
                   <td className="p-4 text-neutral-500">{pet.age || "N/A"}</td>
-
                   <td className="p-4">
-                    <span className="px-3 py-1 text-[10px] font-black rounded-full bg-green-100 text-green-800 border border-green-200/60 uppercase tracking-widest">
-                      Available
+                    <span
+                      className={`px-3 py-1 text-[10px] font-black rounded-full border uppercase tracking-widest ${
+                        pet.status?.toLowerCase() === "adopted"
+                          ? "bg-blue-100 text-blue-800 border-blue-200/60"
+                          : "bg-green-100 text-green-800 border-green-200/60"
+                      }`}
+                    >
+                      {pet.status || "Available"}
                     </span>
                   </td>
-
-                  <td className="p-4">
+                  <td className="p-4 flex items-center justify-center gap-2">
+                    <button
+                      onClick={() => openRequestsModal(pet._id)}
+                      className="px-3 py-1 text-xs font-bold text-white bg-sky-600 rounded-lg hover:bg-sky-700 active:scale-95 transition-all shadow-sm"
+                    >
+                      Check Requests
+                    </button>
+                    <button
+                      onClick={() => openEditModal(pet)}
+                      className="px-3 py-1 text-xs font-bold text-white bg-amber-500 rounded-lg hover:bg-amber-600 active:scale-95 transition-all shadow-sm"
+                    >
+                      Edit
+                    </button>
                     <button
                       onClick={() => handleDelete(pet._id)}
                       className="px-3 py-1 text-xs font-bold text-white bg-red-600 rounded-lg hover:bg-red-700 active:scale-95 transition-all shadow-sm"
@@ -155,6 +227,20 @@ const MyListingsPage = () => {
           </table>
         </div>
       )}
+
+      <PetRequestsModal
+        petId={activePetId}
+        onClose={() => document.getElementById("requests_modal").close()}
+        onStatusUpdated={handleStatusUpdate}
+      />
+
+      <EditPetModal
+        pet={selectedPetForEdit}
+        onClose={() => document.getElementById("edit_pet_modal").close()}
+        onUpdateSuccess={handleUpdateSuccess}
+      />
+
+      <ToastContainer position="top-right" autoClose={2500} theme="light" />
     </div>
   );
 };

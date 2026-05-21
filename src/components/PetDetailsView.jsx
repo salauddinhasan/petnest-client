@@ -6,6 +6,7 @@ import { Button } from "@heroui/react";
 import { FaStar, FaHeart, FaPaw } from "react-icons/fa";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const PetDetailsView = ({ pet, id, token }) => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const PetDetailsView = ({ pet, id, token }) => {
   const handleLinkClick = (e) => {
     if (!token) {
       e.preventDefault();
-      alert("🛑 রিকোয়েস্ট পাঠাতে প্রথমে লগইন করুন বস!");
+      toast("request pathat loging korun");
       router.push("/login");
     }
   };
@@ -45,6 +46,7 @@ const PetDetailsView = ({ pet, id, token }) => {
                 className="w-full h-full object-cover"
                 width={80}
                 height={80}
+                priority={true}
               />
             </button>
           ))}
@@ -55,7 +57,7 @@ const PetDetailsView = ({ pet, id, token }) => {
             alt={pet?.name || "Pet Image"}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            priority
+           priority={true}
             className="object-cover transition-all duration-500"
           />
         </div>

@@ -36,8 +36,13 @@ const AddPetsPage = () => {
     });
 
     if (res.ok) {
-      toast.success("Pet added!");
-      router.push("/dashboard/my-listings");
+      toast.success("Pet added successfully!");
+
+      router.refresh();
+
+      setTimeout(() => {
+        router.push("/dashboard/my-listings");
+      }, 1500);
     } else {
       toast.error("Something went wrong!");
     }

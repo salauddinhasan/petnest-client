@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
+import ThemeToggle from "@/components/ThemeToggle"; // 🎯 ১. থিম টগল কম্পোনেন্ট ইম্পোর্ট করা হলো
 
 const Navbar = () => {
   const { data } = authClient.useSession();
@@ -39,7 +40,7 @@ const Navbar = () => {
     `transition-all duration-200 font-medium ${
       pathname === path
         ? "text-sky-600 font-bold border-b-2 border-sky-600 pb-1"
-        : "text-gray-600 hover:text-sky-600"
+        : "text-gray-600 dark:text-neutral-300 hover:text-sky-600 dark:hover:text-sky-400"
     }`;
 
   // logout
@@ -55,8 +56,8 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-sky-50 shadow-sm">
-      <div className=" px-10 py-3 md:px-10 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border-b border-sky-50 dark:border-neutral-800 shadow-sm transition-colors">
+      <div className="px-10 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <h1 className="text-2xl font-bold text-sky-600 tracking-wide">
@@ -95,6 +96,9 @@ const Navbar = () => {
 
         {/* Desktop Right */}
         <div className="hidden md:flex items-center gap-4">
+          {/* 🎯 ২. ডেস্কটপ থিম টগল বাটন */}
+          <ThemeToggle />
+
           {user ? (
             <div className="relative" ref={dropdownRef}>
               {/* Avatar */}
@@ -110,23 +114,23 @@ const Navbar = () => {
                   alt={user.name || "User"}
                   width={40}
                   height={40}
-                  className="w-10 h-10 rounded-full border-2 border-sky-200 object-cover"
+                  className="w-10 h-10 rounded-full border-2 border-sky-200 dark:border-neutral-700 object-cover"
                 />
 
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-gray-700 dark:text-neutral-200">
                   {user.name} ▾
                 </span>
               </button>
 
               {/* Dropdown */}
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 overflow-hidden">
-                  <div className="px-4 py-3 border-b border-gray-100">
-                    <h3 className="text-sm font-semibold text-gray-800">
+                <div className="absolute right-0 mt-3 w-56 bg-white dark:bg-neutral-800 rounded-2xl shadow-xl border border-gray-100 dark:border-neutral-700 py-2 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-gray-100 dark:border-neutral-700">
+                    <h3 className="text-sm font-semibold text-gray-800 dark:text-neutral-200">
                       {user.name}
                     </h3>
 
-                    <p className="text-xs text-gray-500 truncate">
+                    <p className="text-xs text-gray-500 dark:text-neutral-400 truncate">
                       {user.email}
                     </p>
                   </div>
@@ -134,7 +138,7 @@ const Navbar = () => {
                   <Link
                     href="/dashboard"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-600 transition-all"
+                    className="block px-4 py-2.5 text-sm text-gray-700 dark:text-neutral-200 hover:bg-sky-50 dark:hover:bg-neutral-700 hover:text-sky-600 transition-all"
                   >
                     Dashboard
                   </Link>
@@ -142,7 +146,7 @@ const Navbar = () => {
                   <Link
                     href="/dashboard/my-listings"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-600 transition-all"
+                    className="block px-4 py-2.5 text-sm text-gray-700 dark:text-neutral-200 hover:bg-sky-50 dark:hover:bg-neutral-700 hover:text-sky-600 transition-all"
                   >
                     My Listings
                   </Link>
@@ -150,15 +154,15 @@ const Navbar = () => {
                   <Link
                     href="/dashboard/my-requests"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-600 transition-all"
+                    className="block px-4 py-2.5 text-sm text-gray-700 dark:text-neutral-200 hover:bg-sky-50 dark:hover:bg-neutral-700 hover:text-sky-600 transition-all"
                   >
                     My Requests
                   </Link>
 
-                  <div className="border-t border-gray-100 mt-2 pt-2">
+                  <div className="border-t border-gray-100 dark:border-neutral-700 mt-2 pt-2">
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-all"
+                      className="w-full text-left px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
                     >
                       Logout
                     </button>
@@ -170,7 +174,7 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
               <Link
                 href="/login"
-                className="text-gray-700 hover:text-sky-600 text-sm font-semibold px-4 py-2 transition-all"
+                className="text-gray-700 dark:text-neutral-200 hover:text-sky-600 text-sm font-semibold px-4 py-2 transition-all"
               >
                 Login
               </Link>
@@ -187,6 +191,9 @@ const Navbar = () => {
 
         {/* Mobile */}
         <div className="md:hidden flex items-center gap-3">
+          {/* 🎯 ৩. মোবাইল থিম টগল বাটন */}
+          <ThemeToggle />
+
           {user && (
             <Image
               src={
@@ -196,13 +203,13 @@ const Navbar = () => {
               alt={user.name || "User"}
               width={36}
               height={36}
-              className="w-9 h-9 rounded-full border-2 border-sky-200 object-cover"
+              className="w-9 h-9 rounded-full border-2 border-sky-200 dark:border-neutral-700 object-cover"
             />
           )}
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-2xl text-gray-700"
+            className="text-2xl text-gray-700 dark:text-neutral-200"
           >
             {isMenuOpen ? "✕" : "☰"}
           </button>
@@ -211,7 +218,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg px-5 py-5 flex flex-col gap-4">
+        <div className="md:hidden bg-white dark:bg-neutral-900 border-t border-gray-100 dark:border-neutral-800 shadow-lg px-5 py-5 flex flex-col gap-4">
           <Link
             href="/"
             onClick={() => setIsMenuOpen(false)}
@@ -264,17 +271,17 @@ const Navbar = () => {
 
               <button
                 onClick={handleLogout}
-                className="w-full bg-red-50 text-red-600 py-2 rounded-lg font-medium"
+                className="w-full bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 py-2 rounded-lg font-medium"
               >
                 Logout
               </button>
             </>
           ) : (
-            <div className="flex flex-col gap-3 pt-3 border-t border-gray-100">
+            <div className="flex flex-col gap-3 pt-3 border-t border-gray-100 dark:border-neutral-800">
               <Link
                 href="/login"
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full border border-gray-200 text-center py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-50"
+                className="w-full border border-gray-200 dark:border-neutral-700 text-center py-2 rounded-lg font-medium text-gray-700 dark:text-neutral-200 hover:bg-gray-50 dark:hover:bg-neutral-800"
               >
                 Login
               </Link>

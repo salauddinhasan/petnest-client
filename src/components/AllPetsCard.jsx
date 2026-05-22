@@ -31,6 +31,7 @@ const AllPetsCard = ({ petnes }) => {
           alt={name || "Pet Image"}
           fill
           sizes="(max-w-7xl) 25vw"
+          priority={true}
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
 

@@ -18,8 +18,7 @@ const EditPetModal = ({ pet, onClose, onUpdateSuccess }) => {
     e.preventDefault();
     setUpdating(true);
     try {
-      const baseUrl =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
 
       const res = await fetch(`${baseUrl}/pets/${editPet._id}`, {
         method: "PUT",
@@ -52,7 +51,10 @@ const EditPetModal = ({ pet, onClose, onUpdateSuccess }) => {
   };
 
   return (
-    <dialog id="edit_pet_modal" className="modal modal-bottom sm:modal-middle mx-auto my-5">
+    <dialog
+      id="edit_pet_modal"
+      className="modal modal-bottom sm:modal-middle mx-auto my-5"
+    >
       <div className="modal-box max-w-md bg-white border border-neutral-200 rounded-2xl p-6">
         <h3 className="font-black text-xl text-neutral-950 mb-4 flex items-center gap-2">
           Edit Pet Information

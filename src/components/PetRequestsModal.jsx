@@ -5,15 +5,14 @@ import React, { useState, useEffect } from "react";
 const PetRequestsModal = ({ petId, onClose, onStatusUpdated }) => {
   const [petRequests, setPetRequests] = useState([]);
   const [fetchingRequests, setFetchingRequests] = useState(false);
- 
+
   useEffect(() => {
     if (!petId) return;
 
     const fetchPetRequests = async () => {
       setFetchingRequests(true);
       try {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
         const res = await fetch(`${baseUrl}/requests?petId=${petId}`);
         const result = await res.json();
 
@@ -36,10 +35,13 @@ const PetRequestsModal = ({ petId, onClose, onStatusUpdated }) => {
   }, [petId]);
 
   return (
-    <dialog id="requests_modal" className="modal modal-bottom sm:modal-middle mx-auto my-5">
+    <dialog
+      id="requests_modal"
+      className="modal modal-bottom sm:modal-middle mx-auto my-5"
+    >
       <div className="modal-box max-w-2xl bg-white border border-neutral-200 rounded-2xl p-6">
         <h3 className="font-black text-xl text-neutral-950 mb-4 flex items-center gap-2">
-          Adoption Requests Received 
+          Adoption Requests Received
         </h3>
 
         <div className="py-2">

@@ -13,12 +13,18 @@ const MyRequestsPage = () => {
   const fetchMyRequests = async () => {
     try {
       const session = await authClient.getSession();
+      console.log(session)
       const token = session?.data?.token || "valid_token";
+      const userEmail = session?.data?.user?.email;
 
-      const res = await fetch("http://localhost:5000/my-requests", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/my-requests?email=${userEmail}`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}`},
+          cache: 'no-store',
+        },
+      );
 
       const result = await res.json();
       if (result.success || res.ok) {
@@ -30,7 +36,6 @@ const MyRequestsPage = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchMyRequests();
   }, []);
@@ -41,10 +46,13 @@ const MyRequestsPage = () => {
         const session = await authClient.getSession();
         const token = session?.data?.token || "valid_token";
 
-        const res = await fetch(`http://localhost:5000/requests/${id}`, {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/requests/${id}`,
+          {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
 
         const result = await res.json();
 

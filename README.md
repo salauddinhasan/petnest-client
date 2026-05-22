@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🐾 PetNest - Pet Adoption & Care Platform
 
-## Getting Started
+PetNest is a modern, responsive full-stack web application designed to connect pet lovers with pets looking for a forever home. Users can browse available pets, adopt their favorites, and manage their profiles seamlessly.
 
-First, run the development server:
+## 🌐 Live Links
+- **Frontend Live Site:** [https://petnest-client-six.vercel.app]
+- **Backend API Server:** [https://petnest-server.vercel.app]
 
+---
+
+## 🚀 Key Features
+
+- **Comprehensive Pet Showcasing:** Dynamic browsing of pets with detailed specifications, categories, and status tracking.
+- **Robust Authentication:** Secure user authentication (Email/Password) powered by **Better Auth**.
+- **Interactive Adoption System:** Users can request adoptions, manage their pet listings, and view adoption history.
+- **Responsive Layout:** Sleek and adaptable UI tailored for Mobile, Tablet, and Desktop screens.
+- **Efficient Data Handling:** Dynamic server-side and client-side data fetching using **Next.js** routing and MongoDB.
+
+---
+
+## 🛠️ Technologies Used
+
+### Frontend:
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind CSS & DaisyUI (for clean and responsive components)
+- **Authentication:** Better Auth (Client setup)
+
+### Backend:
+- **Runtime Environment:** Node.js
+- **Framework:** Express.js
+- **Database:** MongoDB (via official MongoDB driver/adapter)
+- **Deployment:** Vercel
+
+---
+
+## 💻 Local Setup & Installation
+
+Follow these steps to run the project locally on your machine:
+
+### 1. Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone <your-repository-url>
+cd petnest-client

@@ -5,12 +5,15 @@ export function proxy(request) {
   const token2 = request.cookies.get(
     "__secure-better-auth.session_token",
   )?.value;
-  const sessionToken = token1 || token2;
+  const token3 = request.cookies.get(
+    "__Secure-better-auth.session_token",
+  )?.value;
+  const sessionToken = token1 || token2 || token3;
 
   const { pathname } = request.nextUrl;
 
   const isDashboard = pathname.startsWith("/dashboard");
-  const isDetailsPage = pathname.startsWith("/all-pets");
+  const isDetailsPage = pathname.startsWith("/all-pets/");
   const isAuthPage =
     pathname.startsWith("/login") || pathname.startsWith("/register");
 

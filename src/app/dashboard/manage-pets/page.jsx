@@ -12,8 +12,7 @@ const ManagePetsPage = () => {
   useEffect(() => {
     const fetchMyPets = async () => {
       try {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
         const res = await fetch(`${baseUrl}/pets`);
         const data = await res.json();
         setPets(data);
@@ -32,8 +31,7 @@ const ManagePetsPage = () => {
         const session = await authClient.getSession();
         const token = session?.data?.token || "valid_token";
 
-        const baseUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
         const res = await fetch(`${baseUrl}/pets/${id}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },

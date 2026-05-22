@@ -12,6 +12,7 @@ const AddPetsPage = () => {
     e.preventDefault();
     const form = e.target;
 
+     console.log("session:", session);
     const petData = {
       name: form.name.value,
       species: form.species.value,
@@ -29,7 +30,9 @@ const AddPetsPage = () => {
       createdAt: new Date(),
     };
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`, {
+        console.log("petData:", petData);
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/pets`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(petData),

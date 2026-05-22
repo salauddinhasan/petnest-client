@@ -12,6 +12,7 @@ const AdoptRequestPage = () => {
   const [loading, setLoading] = useState(false);
   const [sessionToken, setSessionToken] = useState(null);
   const [petName, setPetName] = useState("");
+  const [userData, setUserData] = useState({ name: "", email: "" });
 
   useEffect(() => {
     const getSessionAndPet = async () => {
@@ -22,10 +23,13 @@ const AdoptRequestPage = () => {
         return;
       }
       setSessionToken(session?.data?.token || "valid_token");
+      setUserData({
+        name: session?.data?.user?.name || "",
+        email: session?.data?.user?.email || "",
+      });
 
       try {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
         const res = await fetch(`${baseUrl}/pets/${id}`);
         if (res.ok) {
           const petData = await res.json();
@@ -56,12 +60,13 @@ const AdoptRequestPage = () => {
       requesterPhone,
       requesterAddress,
       message,
+      requesterEmail: userData.email,
+      requesterName: userData.name,
       status: "pending",
     };
 
     try {
-      const baseUrl =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
       const res = await fetch(`${baseUrl}/requests`, {
         method: "POST",
         headers: {
@@ -105,7 +110,6 @@ const AdoptRequestPage = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          {/* Phone Input */}
           <div className="flex flex-col gap-1">
             <label className="text-xs font-bold text-neutral-500">
               Your Phone Number
@@ -119,7 +123,6 @@ const AdoptRequestPage = () => {
             />
           </div>
 
-          {/* Address Input */}
           <div className="flex flex-col gap-1">
             <label className="text-xs font-bold text-neutral-500">
               Your Full Address
@@ -145,7 +148,6 @@ const AdoptRequestPage = () => {
             />
           </div>
 
-          {/* Message Input */}
           <div className="flex flex-col gap-1">
             <label className="text-xs font-bold text-neutral-500">
               Why do you want to adopt {petName}?
@@ -159,7 +161,6 @@ const AdoptRequestPage = () => {
             ></textarea>
           </div>
 
-          {/* Submit Button */}
           <Button
             type="submit"
             disabled={loading}

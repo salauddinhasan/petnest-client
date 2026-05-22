@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
-import ThemeToggle from "@/components/ThemeToggle"; // 🎯 ১. থিম টগল কম্পোনেন্ট ইম্পোর্ট করা হলো
+import ThemeToggle from "@/components/ThemeToggle";  
 
 const Navbar = () => {
   const { data } = authClient.useSession();
@@ -96,7 +96,7 @@ const Navbar = () => {
 
         {/* Desktop Right */}
         <div className="hidden md:flex items-center gap-4">
-          {/* 🎯 ২. ডেস্কটপ থিম টগল বাটন */}
+          
           <ThemeToggle />
 
           {user ? (
@@ -191,7 +191,7 @@ const Navbar = () => {
 
         {/* Mobile */}
         <div className="md:hidden flex items-center gap-3">
-          {/* 🎯 ৩. মোবাইল থিম টগল বাটন */}
+          
           <ThemeToggle />
 
           {user && (
